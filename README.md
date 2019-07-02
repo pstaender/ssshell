@@ -1,6 +1,6 @@
-# ssshell is a REPL for SilverStripe
+# ssshell
 
-## Like tinker for Laravel - runs on top of Psy Shell 🚀
+## REPL for SilverStripe running on Psy Shell 🚀
 
 ### Install
 
@@ -93,9 +93,9 @@ SILVERSTRIPE DEVELOPMENT TOOLS: Tasks
 …
 ```
 
-### Static Command
+#### Static Command
 
-View available static properties / methods of classes., analog to
+View available static properties / methods of classes.
 
 Displays static properties and methods:
 
@@ -109,4 +109,5 @@ To display only one of them:
 >>> static props SilverStripe\Control\Director
 …
 >>> static methods SilverStripe\Control\Director
+…
 ```
