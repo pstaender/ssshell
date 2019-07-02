@@ -12,7 +12,7 @@ Go to your SilverStripe (v4+) project root, then type:
 
 ### Usage
 
-To use ssshell just type `./vendor/bin/sshell` in your project folder, and you'll see some welcome messages like
+To use ssshell just type `./vendor/bin/sshell` in your project folder and you can start using the shell:
 
 ```sh
   Psy Shell v0.9.9 (PHP 7.3.6 — cli) by Justin Hileman
@@ -22,19 +22,23 @@ To use ssshell just type `./vendor/bin/sshell` in your project folder, and you'l
 
 ### Features
 
-`ssshell` comes with a set of [frequent used namespaces](https://github.com/pstaender/ssshell/blob/master/src/SSShell/SilverStripeShell.php#L12) for convenient REPL handling.
+#### Namespaces and views of objects and lists
+
+`ssshell` comes with a set of [frequent used namespaces](https://github.com/pstaender/ssshell/blob/b9dd8b7aa4d437344a774d82643470e43b13d376/src/SSShell/SilverStripeShell.php#L12) for convenient REPL handling.
+
+By default all DataObjects, DataLists, ArrayLists and Query objects will be displayed in a human-readable fashion.
 
 As example, creating a SilverStripe User would be:
 
 ```sh
-  >>> Member::create(['Email' => 'editor', 'Password' => 'supersecret'])->write()
-  => 2
+  >>> Member::create(['Email' => 'editor', 'Password' => 'password'])->write()
+  => 1
   >>> Member::get()->first()
   => SilverStripe\Security\Member {#3229
       +ClassName: "SilverStripe\Security\Member",
       +LastEdited: "2019-07-01 11:34:54",
       +Created: "2019-07-01 11:34:54",
-      +Email: "admin",
+      +Email: "editor",
       +Password: "$2y$10$9b5f51921992948f40cf7uHeqjQLuG9Bnqf4sq54TBnsB80CmwJhC",
       +PasswordEncryption: "blowfish",
       +Salt: "10$9b5f51921992948f40cf75",
@@ -62,7 +66,7 @@ As example, creating a SilverStripe User would be:
     }
 ```
 
-#### Sake is included
+#### Sake command is included
 
 You can use all familiar sake commands:
 
