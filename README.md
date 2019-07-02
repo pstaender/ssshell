@@ -16,7 +16,7 @@ To use ssshell just type `./vendor/bin/sshell` in your project folder and you ca
 
 ```sh
   Psy Shell v0.9.9 (PHP 7.3.6 — cli) by Justin Hileman
-  Welcome to SilverStripeShell v0.0.1 by Philipp Staender
+  Loading live environment (SilverStripe Framework ^ v4.0.0)
   >>>
 ```
 
