@@ -71,7 +71,7 @@ class SilverStripeShell
     {
         $shellConfig = self::$shell_config;
         if (!$shellConfig['startupMessage']) {
-            $shellConfig['startupMessage'] = "Loading " . \SilverStripe\Control\Director::get_environment_type() . " environment (SilverStripe Framework ^ v" . \SilverStripe\Dev\Deprecation::dump_settings()['version'] . ")";
+            $shellConfig['startupMessage'] = "Loading " . \SilverStripe\Control\Director::get_environment_type() . " environment (SilverStripe " . (new \SilverStripe\Core\Manifest\VersionProvider())->getVersion() . ")";
         }
         $config = new Configuration($shellConfig);
         $config->getPresenter()->addCasters(
