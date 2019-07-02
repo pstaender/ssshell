@@ -9,15 +9,15 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SilverStripeSakeCommand extends Command
+class SakeCommand extends Command
 {
     protected static $defaultName = 'sake';
 
     protected function configure()
     {
         $this
-            ->setDescription('Runs a sake command, e.g. sake dev/build')
-            ->addArgument('url', InputArgument::REQUIRED, 'URL');
+            ->setDescription('Run a sake command, e.g. sake dev/build')
+            ->addArgument('url', InputArgument::REQUIRED);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -28,14 +28,13 @@ class SilverStripeSakeCommand extends Command
 
     public static function execute_silverstripe_url($url = null, $flush = true)
     {
-
+        // hacky way to force a parameter, but this seems to be the most efficient way here
         $_SERVER['REQUEST_URI'] = $url;
-        // Build request and detect flush
         $request = CLIRequestBuilder::createFromEnvironment();
-
-        // Default application
         $kernel = new CoreKernel(BASE_PATH);
-        $kernel->boot($flush);
+        if ($flush) {
+            $kernel->boot($flush);
+        }
         $app = new HTTPApplication($kernel);
         return $response = $app->handle($request);
     }

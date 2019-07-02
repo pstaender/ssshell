@@ -20,7 +20,7 @@ call_user_func(function () {
     die("Failed to include composer's autoloader, unable to continue");
 });
 
-PStaender\SSShell\SilverStripeSakeCommand::execute_silverstripe_url();
+PStaender\SSShell\SakeCommand::execute_silverstripe_url();
 
-$shell = new PStaender\SSShell\SilverStripeShell();
+$shell = new PStaender\SSShell\InteractiveShell();
 $shell->run();

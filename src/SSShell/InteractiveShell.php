@@ -4,10 +4,8 @@ namespace PStaender\SSShell;
 use Psy\Configuration;
 use Psy\Shell;
 
-class SilverStripeShell
+class InteractiveShell
 {
-
-    const VERSION = '0.0.1';
 
     private static $using_namespaces = [
         'SilverStripe\i18n\i18n',
@@ -37,10 +35,6 @@ class SilverStripeShell
         'startupMessage' => null,
     ];
 
-    private static $include_relationships = true;
-
-    private static $_nesting_level = 0;
-
     private $shell = null;
 
     public function run()
@@ -63,7 +57,8 @@ class SilverStripeShell
     private function getCommands()
     {
         return [
-            new SilverStripeSakeCommand(),
+            new SakeCommand(),
+            new StaticCommand(),
         ];
     }
 
@@ -71,7 +66,9 @@ class SilverStripeShell
     {
         $shellConfig = self::$shell_config;
         if (!$shellConfig['startupMessage']) {
-            $shellConfig['startupMessage'] = "Loading " . \SilverStripe\Control\Director::get_environment_type() . " environment (SilverStripe " . (new \SilverStripe\Core\Manifest\VersionProvider())->getVersion() . ")";
+            $environment = \SilverStripe\Control\Director::get_environment_type();
+            $version = (new \SilverStripe\Core\Manifest\VersionProvider())->getVersion();
+            $shellConfig['startupMessage'] = "Loading $environment environment (SilverStripe $version)";
         }
         $config = new Configuration($shellConfig);
         $config->getPresenter()->addCasters(

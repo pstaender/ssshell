@@ -66,7 +66,7 @@ As example, creating a SilverStripe User would be:
     }
 ```
 
-#### Sake command is included
+#### Sake command
 
 You can use all familiar sake commands:
 
@@ -91,4 +91,22 @@ SILVERSTRIPE DEVELOPMENT TOOLS: Tasks
  * Migrate SiteTree Linking Task: sake dev/tasks/MigrateSiteTreeLinkingTask
  * Database Migrations: sake dev/tasks/MigrationTask
 …
+```
+
+### Static Command
+
+View available static properties / methods of classes., analog to
+
+Displays static properties and methods:
+
+```sh
+>>> static SilverStripe\Control\Director
+```
+
+To display only one of them:
+
+```sh
+>>> static props SilverStripe\Control\Director
+…
+>>> static methods SilverStripe\Control\Director
 ```
