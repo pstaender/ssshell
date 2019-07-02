@@ -1,0 +1,33 @@
+{
+  "name": "pstaender/ssshell",
+  "type": "silverstripe-vendormodule",
+  "description": "ssshell is a REPL for SilverStripe. Runs on top of PsySH 🚀",
+  "homepage": "https://github.com/pstaender/ssshell",
+  "keywords": [
+    "silverstripe",
+    "shell",
+    "console",
+    "repl",
+    "debug",
+    "tinker"
+  ],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Philipp Staender",
+      "homepage": "https://pstaender.com"
+    }
+  ],
+  "require": {
+    "silverstripe/framework": "~4",
+    "psy/psysh": "^0.9.9"
+  },
+  "bin": [
+    "ssshell"
+  ],
+  "autoload": {
+    "psr-4": {
+      "PStaender\\": "src/"
+    }
+  }
+}
