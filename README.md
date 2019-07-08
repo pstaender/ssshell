@@ -12,7 +12,7 @@ Go to your SilverStripe (v4+) project root, then type:
 
 ### Usage
 
-To use ssshell just type `./vendor/bin/sshell` in your project folder and you can start using the shell:
+To use ssshell just type `./vendor/bin/ssshell` in your project folder and you can start using the shell:
 
 ```sh
   Psy Shell v0.9.9 (PHP 7.3.6 — cli) by Justin Hileman
