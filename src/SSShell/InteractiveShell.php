@@ -13,6 +13,7 @@ class InteractiveShell
         'SilverStripe\Security\Security',
         'SilverStripe\Security\Member',
         'SilverStripe\Security\Group',
+        'SilverStripe\Security\Permission',
         'SilverStripe\Reports\Reports',
         'SilverStripe\ORM\DB',
         'SilverStripe\Control\Director',
