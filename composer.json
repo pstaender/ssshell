@@ -20,7 +20,7 @@
   ],
   "require": {
     "silverstripe/framework": "~4",
-    "psy/psysh": "^0.9.9"
+    "psy/psysh": "~0.9.9"
   },
   "bin": [
     "ssshell"
