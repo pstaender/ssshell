@@ -1,4 +1,5 @@
 <?php
+
 namespace PStaender\SSShell;
 
 use Psy\Configuration;
@@ -6,7 +7,6 @@ use Psy\Shell;
 
 class InteractiveShell
 {
-
     private static $using_namespaces = [
         'SilverStripe\i18n\i18n',
         'SilverStripe\SiteConfig\SiteConfig',
@@ -48,10 +48,11 @@ class InteractiveShell
         $this->shell = new Shell($this->shellConfig());
         foreach (self::$using_namespaces as $className) {
             if (class_exists($className)) {
-                $this->shell->addInput("use $className");
+                $this->shell->addInput("use $className", $silent = true);
             }
         }
         $this->shell->addCommands($this->getCommands());
+
         return $this->shell;
     }
 
@@ -69,23 +70,30 @@ class InteractiveShell
         if (!$shellConfig['startupMessage']) {
             $environment = \SilverStripe\Control\Director::get_environment_type();
             $version = (new \SilverStripe\Core\Manifest\VersionProvider())->getVersion();
-            $shellConfig['startupMessage'] = "Loading $environment environment (SilverStripe $version)";
+            $namespaces = array_map(function ($namespace) {
+                $parts = explode('\\', $namespace);
+
+                return $parts[sizeof($parts) - 1].'  <-  '.$namespace;
+            }, self::$using_namespaces);
+            sort($namespaces);
+            $shellConfig['startupMessage'] = implode("\n", $namespaces);
+            $shellConfig['startupMessage'] .= "\n\nLoading $environment environment (SilverStripe $version)";
         }
         $config = new Configuration($shellConfig);
         $config->getPresenter()->addCasters(
             $this->getCasters()
         );
+
         return $config;
     }
 
     private function getCasters()
     {
         return [
-            'SilverStripe\ORM\DataObject' => Caster::class . '::castModel',
-            'SilverStripe\ORM\DataList' => Caster::class . '::castList',
-            'SilverStripe\ORM\ArrayList' => Caster::class . '::castList',
-            'SilverStripe\ORM\Connect\Query' => Caster::class . '::castQuery',
+            'SilverStripe\ORM\DataObject' => Caster::class.'::castModel',
+            'SilverStripe\ORM\DataList' => Caster::class.'::castList',
+            'SilverStripe\ORM\ArrayList' => Caster::class.'::castList',
+            'SilverStripe\ORM\Connect\Query' => Caster::class.'::castQuery',
         ];
     }
-
 }

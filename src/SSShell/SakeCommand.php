@@ -1,4 +1,5 @@
 <?php
+
 namespace PStaender\SSShell;
 
 use Psy\Command\Command;
@@ -36,6 +37,7 @@ class SakeCommand extends Command
             $kernel->boot($flush);
         }
         $app = new HTTPApplication($kernel);
+
         return $response = $app->handle($request);
     }
 }
