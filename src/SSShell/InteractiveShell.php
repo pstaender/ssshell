@@ -7,30 +7,6 @@ use Psy\Shell;
 
 class InteractiveShell
 {
-    private static $using_namespaces = [
-        'SilverStripe\i18n\i18n',
-        'SilverStripe\SiteConfig\SiteConfig',
-        'SilverStripe\Security\Security',
-        'SilverStripe\Security\Member',
-        'SilverStripe\Security\Group',
-        'SilverStripe\Security\Permission',
-        'SilverStripe\Reports\Reports',
-        'SilverStripe\ORM\DB',
-        'SilverStripe\Control\Director',
-        'SilverStripe\Core\Environment',
-        'SilverStripe\Assets\File',
-        'SilverStripe\Assets\Image',
-        'SilverStripe\Assets\Folder',
-        'SilverStripe\Assets\Filesystem',
-        'SilverStripe\ErrorPage\ErrorPage',
-        'SilverStripe\Dev\Debug',
-        'SilverStripe\Config\Config',
-        'SilverStripe\CampaignAdmin\CampaignAdmin',
-        'SilverStripe\CMS\CMS',
-        'SilverStripe\ORM\DataObject',
-        'SilverStripe\CMS\Model\SiteTree',
-    ];
-
     private static $shell_config = [
         'usePcntl' => false,
         'startupMessage' => null,
@@ -46,11 +22,17 @@ class InteractiveShell
     private function shell()
     {
         $this->shell = new Shell($this->shellConfig());
-        foreach (self::$using_namespaces as $className) {
-            if (class_exists($className)) {
-                $this->shell->addInput("use $className", $silent = true);
+        $namespace = NamespacesCommand::get_namespace();
+        if ($namespace) {
+            $this->shell->addInput('namespace '.NamespacesCommand::get_namespace());
+        } else {
+            foreach (NamespacesCommand::get_classes() as $className) {
+                if (class_exists($className)) {
+                    $this->shell->addInput("use $className", $silent = true);
+                }
             }
         }
+
         $this->shell->addCommands($this->getCommands());
 
         return $this->shell;
@@ -61,6 +43,7 @@ class InteractiveShell
         return [
             new SakeCommand(),
             new StaticCommand(),
+            new NamespacesCommand(),
         ];
     }
 
@@ -70,14 +53,7 @@ class InteractiveShell
         if (!$shellConfig['startupMessage']) {
             $environment = \SilverStripe\Control\Director::get_environment_type();
             $version = (new \SilverStripe\Core\Manifest\VersionProvider())->getVersion();
-            $namespaces = array_map(function ($namespace) {
-                $parts = explode('\\', $namespace);
-
-                return $parts[sizeof($parts) - 1].'  <-  '.$namespace;
-            }, self::$using_namespaces);
-            sort($namespaces);
-            $shellConfig['startupMessage'] = implode("\n", $namespaces);
-            $shellConfig['startupMessage'] .= "\n\nLoading $environment environment (SilverStripe $version)";
+            $shellConfig['startupMessage'] .= "Loading $environment environment (SilverStripe $version)";
         }
         $config = new Configuration($shellConfig);
         $config->getPresenter()->addCasters(
