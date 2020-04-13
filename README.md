@@ -7,7 +7,7 @@
 Go to your SilverStripe (v4+) project root, then type:
 
 ```sh
-  $ composer require pstaender/ssshell dev-master
+  $ composer require --dev pstaender/ssshell dev-master
 ```
 
 ### Usage
