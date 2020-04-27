@@ -7,7 +7,7 @@
 Install the (latest) version in your current project with:
 
 ```sh
-  $ composer require pstaender/ssshell dev-master
+  $ composer require --dev pstaender/ssshell dev-master
 ```
 
 Optionally: To use the handy `ssshell` command, install it globally (ensure that .config/composer/vendor/bin is in the path):
