@@ -30,11 +30,12 @@ class NamespacesCommand extends Command implements PresenterAware
         'SilverStripe\Assets\Filesystem',
         'SilverStripe\ErrorPage\ErrorPage',
         'SilverStripe\Dev\Debug',
-        'SilverStripe\Config\Config',
+        'SilverStripe\Core\Config\Config',
         'SilverStripe\CampaignAdmin\CampaignAdmin',
         'SilverStripe\CMS\CMS',
         'SilverStripe\ORM\DataObject',
         'SilverStripe\CMS\Model\SiteTree',
+        'SilverStripe\Control\Email\Email',
     ];
 
     private static $namespace = null;

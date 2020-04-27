@@ -25,6 +25,7 @@ class SakeCommand extends Command
     {
         $url = $input->getArgument('url');
         self::execute_silverstripe_url($url);
+        return 0;
     }
 
     public static function execute_silverstripe_url($url = null, $flush = true)
