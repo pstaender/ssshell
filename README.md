@@ -4,21 +4,21 @@
 
 ### Install
 
-To install it in a global context
-
-```sh
-  $ composer global require pstaender/ssshell dev-master
-```
-
-To install just in your SilverStripe project:
+Install the (latest) version in your current project with:
 
 ```sh
   $ composer require pstaender/ssshell dev-master
 ```
 
+Optionally: To use the handy `ssshell` command, install it globally (ensure that .config/composer/vendor/bin is in the path):
+
+```sh
+  $ composer global require pstaender/ssshell dev-master
+```
+
 ### Usage
 
-To use ssshell just type `ssshell` or `./vendor/bin/ssshell` in your project folder and you can start using the shell:
+To use ssshell just type `./vendor/bin/ssshell` (or `ssshell` if its installed globally) in your project folder and you can start using the shell:
 
 ```sh
   Psy Shell v0.9.9 (PHP 7.3.6 — cli) by Justin Hileman
@@ -30,7 +30,7 @@ To use ssshell just type `ssshell` or `./vendor/bin/ssshell` in your project fol
 
 #### Namespaces and views of objects and lists
 
-`ssshell` comes with a set of [frequent used namespaces](https://github.com/pstaender/ssshell/blob/b9dd8b7aa4d437344a774d82643470e43b13d376/src/SSShell/SilverStripeShell.php#L12) for convenient REPL handling.
+`ssshell` comes with a set of [frequent used namespaces](https://github.com/pstaender/ssshell/blob/master/src/SSShell/NamespacesCommand.php#L17) for convenient REPL handling.
 
 By default all DataObjects, DataLists, ArrayLists and Query objects will be displayed in a human-readable fashion.
 
