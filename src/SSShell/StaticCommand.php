@@ -120,5 +120,7 @@ class StaticCommand extends ReflectingCommand implements PresenterAware
         $output->page(
             $this->presenter->present($dump, $depth, Presenter::VERBOSE)
         );
+
+        return 0;
     }
 }
