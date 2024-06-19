@@ -31,7 +31,7 @@ class StaticCommand extends ReflectingCommand implements PresenterAware
             ->addArgument('nestingLevel', InputArgument::OPTIONAL);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dump = [];
         $className = $input->getArgument('className');
@@ -63,8 +63,6 @@ class StaticCommand extends ReflectingCommand implements PresenterAware
                     $visibility = 'private';
                 } elseif ($reflectionProperty->isProtected()) {
                     $visibility = 'protected';
-                } elseif ($reflectionProperty->isFinal()) {
-                    $visibility = 'final';
                 } else {
                     $visibility = 'public';
                 }
@@ -122,5 +120,10 @@ class StaticCommand extends ReflectingCommand implements PresenterAware
         );
 
         return 0;
+    }
+
+    public function getName(): ?string
+    {
+        return self::$defaultName ?? 'static';
     }
 }
