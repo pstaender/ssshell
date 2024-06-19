@@ -21,7 +21,7 @@
   "require": {
     "silverstripe/framework": "^4 || ^5",
     "psy/psysh": "~0.9",
-    "symfony/console": "^7.0",
+    "symfony/console": "^7.0"
   },
   "bin": [
     "ssshell"
