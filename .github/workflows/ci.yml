@@ -61,7 +61,10 @@ jobs:
         run: echo "sake dev/build" | ./ssshell
       
       - name: Create test file
-        run: echo "use SilverStripe\Security\Member; Member::get()->last()->Email;" > test.php
+        run: echo "SiteConfig::current_site_config()->Title;" > test.php
+
+      - name: Echo test file
+        run: php ./ssshell -n < test.php
       
       - name: Receive Member email via ssshell
         run: (php ./ssshell -n < test.php) | grep -q "admin"; if [ $? -eq 0 ]; then exit 0; else echo exit 1; fi

@@ -30,11 +30,14 @@ class InteractiveShell
             if ($namespace) {
                 $this->shell->addInput('namespace '.NamespacesCommand::get_namespace());
             } else {
+                $namespaceClasses = [];
                 foreach (NamespacesCommand::get_classes() as $className) {
                     if (class_exists($className)) {
-                        $this->shell->addInput("use $className", $this->shellConfig()->getOutputVerbosity() <= 32);
+                        $namespaceClasses[] = "use $className;";
                     }
                 }
+                // adding all namespaces to the shell
+                $this->shell->addInput(implode("\n", $namespaceClasses), $this->shellConfig()->getOutputVerbosity() <= 32);
             }
         }
         

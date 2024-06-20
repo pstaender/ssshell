@@ -87,7 +87,6 @@ class NamespacesCommand extends Command implements PresenterAware
         foreach (self::$classes as $c) {
             if (preg_match('/\*$/', $c)) {
                 $c = substr($c, 0, -1);
-                var_dump($c);
                 foreach ($allClasses as $class) {
                     if (strpos($class, $c) === 0) {
                         $classes[] = $class;
