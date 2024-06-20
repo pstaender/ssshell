@@ -15,13 +15,15 @@ jobs:
     env:
       SS_ENVIRONMENT_TYPE: dev
       SS_DEFAULT_ADMIN_USERNAME: admin
-      SS_DATABASE_NAME: SS_test
+      SS_DATABASE_NAME: SS_mysite
+      SS_DATABASE_SERVER: 127.0.0.1
+      SS_DATABASE_USERNAME: root
     services:
       mariadb:
         image: mariadb:11
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
-          MYSQL_DATABASE: SS_test
+          MYSQL_DATABASE: SS_mysite
         ports:
           - 3306:3306
 
