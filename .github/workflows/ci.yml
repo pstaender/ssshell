@@ -13,8 +13,9 @@ jobs:
           - php: 8.0
             silverstripe: 5
     env:
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
-      MYSQL_DATABASE: SS_test
+      SS_ENVIRONMENT_TYPE: dev
+      SS_DEFAULT_ADMIN_USERNAME: admin
+      SS_DATABASE_NAME: SS_test
     services:
       mariadb:
         image: mariadb:11
