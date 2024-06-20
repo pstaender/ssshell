@@ -56,5 +56,5 @@ jobs:
       
       - name: Run tests
         run: |
-          echo "use SilverStripe\Security\Member; Member::get()->last()->Email;" > test_ssshell.php
+          echo "use SilverStripe\Security\Member; Member::get()->last()->Email;" > test.php
           (vendor/bin/ssshell -n < test.php) | grep -q "admin"; if [ $? -eq 0 ]; then exit 0; else echo exit 1; fi
