@@ -54,8 +54,12 @@ jobs:
         run: |
           php -r "copy('.env.testing', '.env');"
       
-      - name: Run tests
-        run: |
-          ls -al
-          echo "use SilverStripe\Security\Member; Member::get()->last()->Email;" > test.php
+      - name: Run sake dev/build via ssshell
+        run: echo "sake dev/build" | ./ssshell
+      
+      - name: Create test file
+        run: echo "use SilverStripe\Security\Member; Member::get()->last()->Email;" > test.php
+      
+      - name: Receive Member email via ssshell
           (php ./ssshell -n < test.php) | grep -q "admin"; if [ $? -eq 0 ]; then exit 0; else echo exit 1; fi
+        shell: bash
