@@ -58,7 +58,7 @@ jobs:
           php -r "copy('.env.testing', '.env');"
       
       - name: Run sake dev/build via ssshell
-        run: echo "echo 'Running dev/build 🚀'\nsake dev/build\n" | php ./ssshell
+        run: echo "sake dev/build" | php ./ssshell
       
       - name: Echo members count via ssshell
         run: echo "\SilverStripe\Security\Member::get()->count()" | php ./ssshell
