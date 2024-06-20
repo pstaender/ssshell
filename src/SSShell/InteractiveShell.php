@@ -4,15 +4,13 @@ namespace PStaender\SSShell;
 
 use Psy\Configuration;
 use Psy\Shell;
+use Symfony\Component\Console\Input\ArgvInput;
 
 class InteractiveShell
 {
-    private static $shell_config = [
-        'usePcntl' => false,
-        'startupMessage' => null,
-    ];
 
     private $shell = null;
+    private $shellConfig = null;
 
     public function run()
     {
@@ -23,15 +21,26 @@ class InteractiveShell
     {
         $this->shell = new Shell($this->shellConfig());
         $namespace = NamespacesCommand::get_namespace();
-        if ($namespace) {
-            $this->shell->addInput('namespace '.NamespacesCommand::get_namespace());
-        } else {
-            foreach (NamespacesCommand::get_classes() as $className) {
-                if (class_exists($className)) {
-                    $this->shell->addInput("use $className", $silent = true);
+        if (!$this->shellConfig()->inputIsPiped() && $this->shellConfig()->getInputInteractive()) {
+            /**
+             * Only add namespace if we are not in piped input
+             * Otherwise we will get (syntax) error because two inputs are
+             * received at the same time
+             */
+            if ($namespace) {
+                $this->shell->addInput('namespace '.NamespacesCommand::get_namespace());
+            } else {
+                $namespaceClasses = [];
+                foreach (NamespacesCommand::get_classes() as $className) {
+                    if (class_exists($className)) {
+                        $namespaceClasses[] = "use $className;";
+                    }
                 }
+                // adding all namespaces to the shell
+                $this->shell->addInput(implode("\n", $namespaceClasses), $this->shellConfig()->getOutputVerbosity() <= 32);
             }
         }
+        
 
         $this->shell->addCommands($this->getCommands());
 
@@ -49,18 +58,24 @@ class InteractiveShell
 
     private function shellConfig()
     {
-        $shellConfig = self::$shell_config;
-        if (!$shellConfig['startupMessage']) {
-            $environment = \SilverStripe\Control\Director::get_environment_type();
-            $version = (new \SilverStripe\Core\Manifest\VersionProvider())->getVersion();
-            $shellConfig['startupMessage'] .= "Loading $environment environment (SilverStripe $version)";
+        if ($this->shellConfig) {
+            return $this->shellConfig;
         }
-        $config = new Configuration($shellConfig);
+
+        // using same cli arguments as psysh
+        $config = Configuration::fromInput(new ArgvInput());
+
+        $environment = \SilverStripe\Control\Director::get_environment_type();
+        $version = (new \SilverStripe\Core\Manifest\VersionProvider())->getVersion();
+
+        $startupMessage = "Loading $environment environment (SilverStripe $version)";
+        
+        $config->setStartupMessage($startupMessage);
         $config->getPresenter()->addCasters(
             $this->getCasters()
         );
 
-        return $config;
+        return $this->shellConfig = $config;
     }
 
     private function getCasters()

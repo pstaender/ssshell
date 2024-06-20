@@ -2,18 +2,20 @@
 
 ## REPL for SilverStripe running on Psy Shell 🚀
 
+![status](https://github.com/pstaender/ssshell/actions/workflows/ci.yml/badge.svg)
+
 ### Install
 
-Install the (latest) version in your current project with:
+Install in your current project with:
 
 ```sh
-  $ composer require --dev pstaender/ssshell dev-master
+  $ composer require --dev pstaender/ssshell
 ```
 
 Optionally: To use the handy `ssshell` command, install it globally (ensure that .config/composer/vendor/bin is in the path):
 
 ```sh
-  $ composer global require pstaender/ssshell dev-master
+  $ composer global require pstaender/ssshell
 ```
 
 ### Usage
@@ -21,10 +23,14 @@ Optionally: To use the handy `ssshell` command, install it globally (ensure that
 To use ssshell just type `./vendor/bin/ssshell` (or `ssshell` if its installed globally) in your project folder and you can start using the shell:
 
 ```sh
-  Psy Shell v0.9.9 (PHP 7.3.6 — cli) by Justin Hileman
-  Loading live environment (SilverStripe Framework ^ v4.0.0)
+  Psy Shell v0.12.4 (PHP 8.2.19 — cli) by Justin Hileman
+  Loading dev environment (SilverStripe CMS: 5.2.2)
   >>>
 ```
+
+### Command Line Options
+
+You can use the same cli arguments as for psysh.
 
 ### Features
 

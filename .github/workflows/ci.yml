@@ -1,0 +1,64 @@
+name: CI
+
+on: [push]
+
+jobs:
+  continuous-integration:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: [8.0, 8.2, 8.3]
+        silverstripe: [5]
+        exclude:
+          - php: 8.0
+            silverstripe: 5
+    env:
+      SS_ENVIRONMENT_TYPE: dev
+      SS_DEFAULT_ADMIN_USERNAME: admin
+      SS_DATABASE_NAME: SS_mysite
+      SS_DATABASE_SERVER: 127.0.0.1
+      SS_DATABASE_USERNAME: root
+    services:
+      mariadb:
+        image: mariadb:11
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: SS_mysite
+        ports:
+          - 3306:3306
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP with composer 
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, dom, fileinfo, mysql, libxml, xml, xmlwriter, dom, tokenizer, filter, json, phar, pcre, openssl, pdo, intl, curl
+      
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+      
+      - name: Use SilverStripe v${{ matrix.silverstripe }}
+        run: composer require --with-all-dependencies silverstripe/framework "^${{ matrix.silverstripe }}"
+
+      - name: Setup test environment
+        run: |
+          php -r "copy('.env.testing', '.env');"
+      
+      - name: Builds database `sake dev/build` in ssshell
+        run: echo "sake dev/build" | php ./ssshell
+      
+      - name: Asserts number of existing members; expects to be zero
+        run: (echo "\SilverStripe\Security\Member::get()->count()" | php ./ssshell) | grep -q "= 0"; if [ $? -eq 0 ]; then exit 0; else echo exit 1; fi
