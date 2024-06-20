@@ -21,7 +21,7 @@ class SakeCommand extends Command
             ->addArgument('url', InputArgument::REQUIRED);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $url = $input->getArgument('url');
         self::execute_silverstripe_url($url);
@@ -40,5 +40,10 @@ class SakeCommand extends Command
         $app = new HTTPApplication($kernel);
 
         return $response = $app->handle($request);
+    }
+
+    public function getName(): ?string
+    {
+        return self::$defaultName ?? 'sake';
     }
 }

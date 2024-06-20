@@ -55,7 +55,7 @@ class NamespacesCommand extends Command implements PresenterAware
             ->setDescription('Shows all preloaded namespaces');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         return $output->page(
             $this->presenter->present(
@@ -66,7 +66,7 @@ class NamespacesCommand extends Command implements PresenterAware
 
     public static function set_namespace(string $namespace)
     {
-        self::$namespace = $namespacee;
+        self::$namespace = $namespace;
     }
 
     public static function get_namespace()
@@ -125,5 +125,10 @@ class NamespacesCommand extends Command implements PresenterAware
         }
 
         return self::class_mapping()[$className];
+    }
+
+    public function getName(): ?string
+    {
+        return self::$defaultName ?? 'namespaces';
     }
 }
