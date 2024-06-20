@@ -61,7 +61,7 @@ jobs:
         run: echo "sake dev/build" | ./ssshell
       
       - name: Create test file
-        run: echo "SiteConfig::current_site_config()->Title;" > test.php
+        run: echo "SilverStripe\SiteConfig\SiteConfig::current_site_config()->Title;" > test.php
 
       - name: Echo test file
         run: php ./ssshell -n < test.php
