@@ -9,7 +9,6 @@ jobs:
       matrix:
         php: [8.0, 8.3]
         silverstripe: [4, 5]
-        extensions: mbstring, intl
         exclude:
           - php: 8.0
             silverstripe: 5
@@ -27,7 +26,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: php-actions/composer@v6
+
+      - name: Setup PHP with composer 
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, dom, fileinfo, mysql, libxml, xml, xmlwriter, dom, tokenizer, filter, json, phar, pcre, openssl, pdo, intl, curl
+      
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
       
