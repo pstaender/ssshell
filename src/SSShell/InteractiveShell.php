@@ -33,7 +33,7 @@ class InteractiveShell
                 $namespaceClasses = [];
                 foreach (NamespacesCommand::get_classes() as $className) {
                     if (class_exists($className)) {
-                        $namespaceClasses[] = "use $className;";
+                        $namespaceClasses[] = " use $className;";
                     }
                 }
                 // adding all namespaces to the shell
@@ -51,6 +51,7 @@ class InteractiveShell
     {
         return [
             new SakeCommand(),
+            new FlushCommand(),
             new StaticCommand(),
             new NamespacesCommand(),
         ];
@@ -68,7 +69,7 @@ class InteractiveShell
         $environment = \SilverStripe\Control\Director::get_environment_type();
         $version = (new \SilverStripe\Core\Manifest\VersionProvider())->getVersion();
 
-        $startupMessage = "Loading $environment environment (SilverStripe $version)";
+        $startupMessage = "<fg=blue><options=bold>Loading $environment environment</> (SilverStripe $version)</>";
         
         $config->setStartupMessage($startupMessage);
         $config->getPresenter()->addCasters(

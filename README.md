@@ -25,7 +25,7 @@ To use ssshell just type `./vendor/bin/ssshell` (or `ssshell` if its installed g
 ```sh
   Psy Shell v0.12.4 (PHP 8.2.19 — cli) by Justin Hileman
   Loading dev environment (SilverStripe CMS: 5.2.2)
-  >>>
+  >
 ```
 
 ### Command Line Options
@@ -43,9 +43,9 @@ By default all DataObjects, DataLists, ArrayLists and Query objects will be disp
 As example, creating a SilverStripe User would be:
 
 ```sh
-  >>> Member::create(['Email' => 'editor', 'Password' => 'password'])->write()
+  > Member::create(['Email' => 'editor', 'Password' => 'password'])->write()
   => 1
-  >>> Member::get()->first()
+  > Member::get()->first()
   => SilverStripe\Security\Member {#3229
       +ClassName: "SilverStripe\Security\Member",
       +LastEdited: "2019-07-01 11:34:54",
@@ -83,7 +83,7 @@ As example, creating a SilverStripe User would be:
 You can use all familiar sake commands:
 
 ```sh
-  >>> sake dev/build
+  > sake dev/build
   Building database SS_test using SilverStripe\ORM\Connect\MySQL 8.0.16
 
 
@@ -96,7 +96,7 @@ You can use all familiar sake commands:
 ```
 
 ```sh
->>> sake dev/tasks
+> sake dev/tasks
 SILVERSTRIPE DEVELOPMENT TOOLS: Tasks
 --------------------------
 
@@ -105,6 +105,14 @@ SILVERSTRIPE DEVELOPMENT TOOLS: Tasks
 …
 ```
 
+#### Flush command
+
+```sh
+> flush
+```
+
+Same effect when using `sake` with `?flush`.
+
 #### Static Command
 
 View available static properties / methods of classes.
@@ -112,14 +120,14 @@ View available static properties / methods of classes.
 Displays static properties and methods:
 
 ```sh
->>> static SilverStripe\Control\Director
+> static SilverStripe\Control\Director
 ```
 
 To display only one of them:
 
 ```sh
->>> static props SilverStripe\Control\Director
+> static props SilverStripe\Control\Director
 …
->>> static methods SilverStripe\Control\Director
+> static methods SilverStripe\Control\Director
 …
 ```
