@@ -40,9 +40,10 @@ class SakeCommand extends Command
         $response = $app->handle($request);
 
         if (!empty($url) && $output) {
-            $output->write($response->getBody());
             if ($response->getStatusCode() !== 200) {
-                $output->writeln("<error>" . $response->getStatusCode() . "</error>");
+                $output->writeln("<error>ERROR</error> ".$response->getBody());
+            } else {
+                echo $response->getBody();
             }
         }
         // var_dump($response->getBody());
