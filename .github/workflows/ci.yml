@@ -60,8 +60,5 @@ jobs:
       - name: Run sake dev/build via ssshell
         run: echo "sake dev/build" | php ./ssshell
       
-      - name: Echo members count via ssshell
-        run: echo "\SilverStripe\Security\Member::get()->count()" | php ./ssshell
-      
-      # - name: Receive Member email via ssshell
-      #   run: (php ./ssshell -n < test.php) | grep -q "admin"; if [ $? -eq 0 ]; then exit 0; else echo exit 1; fi
+      - name: Echo number of members -> 0
+        run: (echo "\SilverStripe\Security\Member::get()->count()" | php ./ssshell) | grep -q "= 0"; if [ $? -eq 0 ]; then exit 0; else echo exit 1; fi
