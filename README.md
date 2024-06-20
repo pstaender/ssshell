@@ -2,6 +2,8 @@
 
 ## REPL for SilverStripe running on Psy Shell 🚀
 
+![status](https://github.com/pstaender/ssshell/actions/workflows/ci.yml/badge.svg)
+
 ### Install
 
 Install in your current project with:

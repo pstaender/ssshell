@@ -57,8 +57,8 @@ jobs:
         run: |
           php -r "copy('.env.testing', '.env');"
       
-      - name: Run sake dev/build via ssshell
+      - name: Builds database `sake dev/build` in ssshell
         run: echo "sake dev/build" | php ./ssshell
       
-      - name: Echo number of members -> 0
+      - name: Asserts number of existing members; expects to be zero
         run: (echo "\SilverStripe\Security\Member::get()->count()" | php ./ssshell) | grep -q "= 0"; if [ $? -eq 0 ]; then exit 0; else echo exit 1; fi
