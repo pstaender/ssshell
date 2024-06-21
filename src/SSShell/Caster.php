@@ -5,7 +5,6 @@ namespace PStaender\SSShell;
 class Caster
 {
     private static $include_relationships = true;
-    private static $_nesting_level = 0;
 
     public static function castModel($model)
     {

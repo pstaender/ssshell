@@ -12,8 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SakeCommand extends Command
 {
-    protected static $defaultName = 'sake';
-
     protected function configure()
     {
         $this
@@ -24,11 +22,10 @@ class SakeCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $url = $input->getArgument('url');
-        self::execute_silverstripe_url($url ?: '', input: $input, output: $output);
-        return 0;
+        return self::execute_silverstripe_url($url ?: '', input: $input, output: $output);
     }
 
-    public static function execute_silverstripe_url($url, InputInterface $input = null, OutputInterface $output = null)
+    public static function execute_silverstripe_url($url, InputInterface $input = null, OutputInterface $output = null): int
     {
         // hacky way to force a parameter, but this seems to be the most efficient way here
         $_SERVER['REQUEST_URI'] = $url;
@@ -39,19 +36,21 @@ class SakeCommand extends Command
 
         $response = $app->handle($request);
 
-        if (!empty($url) && $output) {
-            if ($response->getStatusCode() !== 200) {
-                $output->writeln("<error>ERROR</error> ".$response->getBody());
+        if (!empty($url)) {
+            if ($response->getStatusCode() >= 400 && $output) {
+                $output->writeln("<error> Error " . $response->getStatusCode() . " </error>");
+                echo ($output->getVerbosity() <= 32 && strlen($response->getBody()) > 160 ? substr($response->getBody(), 0, 160) . '…' : $response->getBody()) . "\n";
+                return $response->getStatusCode();
             } else {
                 echo $response->getBody();
+                return 0;
             }
         }
-        // var_dump($response->getBody());
-        return;
+        return $response->getStatusCode() >= 400 ? $response->getStatusCode() : 0;
     }
 
     public function getName(): ?string
     {
-        return self::$defaultName ?? 'sake';
+        return 'sake';
     }
 }

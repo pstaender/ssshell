@@ -12,8 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FlushCommand extends Command
 {
-    protected static $defaultName = 'flush';
-
     protected function configure()
     {
         $this
@@ -22,7 +20,7 @@ class FlushCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $request = CLIRequestBuilder::createFromEnvironment();
+        CLIRequestBuilder::createFromEnvironment();
         $kernel = new CoreKernel(BASE_PATH);
         $kernel->boot(true);
         $output->writeln("<info>done</info>");
@@ -31,6 +29,6 @@ class FlushCommand extends Command
 
     public function getName(): ?string
     {
-        return self::$defaultName ?? 'flush';
+        return 'flush';
     }
 }
