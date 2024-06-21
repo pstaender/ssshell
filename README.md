@@ -12,12 +12,6 @@ Install in your current project with:
   $ composer require --dev pstaender/ssshell
 ```
 
-Optionally: To use the handy `ssshell` command, install it globally (ensure that .config/composer/vendor/bin is in the path):
-
-```sh
-  $ composer global require pstaender/ssshell
-```
-
 ### Usage
 
 To use ssshell just type `./vendor/bin/ssshell` (or `ssshell` if its installed globally) in your project folder and you can start using the shell:
@@ -30,7 +24,13 @@ To use ssshell just type `./vendor/bin/ssshell` (or `ssshell` if its installed g
 
 ### Command Line Options
 
-You can use the same cli arguments as for psysh.
+You can use most of psyshs' cli arguments. Type `psysh -h` for help.
+
+### Requirements
+
+sshell runs on SilverStripe v5.
+
+For SilverStripe v4 you can use the `ss4`-branch or stick to version v0.0.4 via `composer require pstaender/ssshell 'v0.0.4'`.
 
 ### Features
 
