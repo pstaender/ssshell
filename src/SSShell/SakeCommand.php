@@ -3,9 +3,12 @@
 namespace PStaender\SSShell;
 
 use Psy\Command\Command;
+use SilverStripe\Cli\Sake;
 use SilverStripe\Control\CLIRequestBuilder;
 use SilverStripe\Control\HTTPApplication;
 use SilverStripe\Core\CoreKernel;
+use SilverStripe\ORM\DB;
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,16 +19,38 @@ class SakeCommand extends Command
     {
         $this
             ->setDescription('Run a sake command, e.g. sake dev/build')
-            ->addArgument('url', InputArgument::REQUIRED);
+            ->addOption('verbose', ['v', 'vv', 'vvv'])
+            ->addOption('flush', 'f')
+            ->addOption('ansi')
+            ->addOption('no-ansi')
+            ->addOption('no-interaction')
+            ->addOption('no-database')
+            ->setHelp('This command allows you to run any sake command from the command line.')
+            ->addArgument('arg', InputArgument::IS_ARRAY, 'The sake command to run, e.g. "dev/build" or "dev/tasks/MyTask"');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $url = $input->getArgument('url');
-        return self::execute_silverstripe_url($url ?: '', input: $input, output: $output);
+        DB::setMustUsePrimary();
+        $sake = new Sake();
+        $args = $input->getArguments()["arg"];
+        $options = [
+            $input->getOption('verbose') ? '-vvv' : null,
+            $input->getOption('flush') ? '--flush' : null,
+            $input->getOption('ansi') ? '--ansi' : null,
+            $input->getOption('no-ansi') ? '--no-ansi' : null,
+            $input->getOption('no-interaction') ? '--no-interaction' : null,
+            $input->getOption('no-database') ? '--no-database' : null,
+        ];
+        $options = array_filter($options); // Remove null values
+        $options = array_filter($options, fn($option) => $option !== '--help');
+        $args = array_merge($options, $args);
+        array_unshift($args, 'sake'); // Add 'sake' as the first argument to match the expected command structure
+        $sake->setAutoExit(false);
+        return $sake->run(new ArgvInput($args));
     }
 
-    public static function execute_silverstripe_url($url, InputInterface $input = null, OutputInterface $output = null): int
+    public static function execute_silverstripe_url($url, ?InputInterface $input = null, ?OutputInterface $output = null): int
     {
         // hacky way to force a parameter, but this seems to be the most efficient way here
         $_SERVER['REQUEST_URI'] = $url;

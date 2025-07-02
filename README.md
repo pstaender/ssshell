@@ -17,8 +17,8 @@ Install in your current project with:
 To use ssshell just type `./vendor/bin/ssshell` (or `ssshell` if its installed globally) in your project folder and you can start using the shell:
 
 ```sh
-  Psy Shell v0.12.4 (PHP 8.2.19 — cli) by Justin Hileman
-  Loading dev environment (SilverStripe CMS: 5.2.2)
+  Psy Shell v0.12.9 (PHP 8.4.8 — cli) by Justin Hileman
+  Loading dev environment (SilverStripe CMS: 6.0.0)
   >
 ```
 
@@ -28,9 +28,9 @@ You can use most of psyshs' cli arguments. Type `psysh -h` for help.
 
 ### Requirements
 
-sshell runs on SilverStripe v5.
+sshell runs on SilverStripe v6.
 
-For SilverStripe v4 you can use the `ss4`-branch or stick to version v0.0.4 via `composer require pstaender/ssshell 'v0.0.4'`.
+For SilverStripe v4 and v5 you can use the `ss4` / `ss5`-branches or stick to corresponding versions.
 
 ### Features
 
@@ -83,14 +83,12 @@ As example, creating a SilverStripe User would be:
 You can use all familiar sake commands:
 
 ```sh
-  > sake dev/build
+  > sake db:build
   Building database SS_test using SilverStripe\ORM\Connect\MySQL 8.0.16
-
-
-  CREATING DATABASE TABLES
+  ----------------------------------------------------------------------------
+  Creating database tables
 
   * File (0 records)
-    * CHECK TABLE command disabled for PDO in native mode
   * SiteConfig (1 records)
   …
 ```
