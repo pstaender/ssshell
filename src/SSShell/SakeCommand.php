@@ -18,15 +18,14 @@ class SakeCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Run a sake command, e.g. sake dev/build')
+            ->setDescription('Run a sake command, e.g. sake db:build')
             ->addOption('verbose', ['v', 'vv', 'vvv'])
-            ->addOption('flush', 'f')
             ->addOption('ansi')
             ->addOption('no-ansi')
             ->addOption('no-interaction')
             ->addOption('no-database')
             ->setHelp('This command allows you to run any sake command from the command line.')
-            ->addArgument('arg', InputArgument::IS_ARRAY, 'The sake command to run, e.g. "dev/build" or "dev/tasks/MyTask"');
+            ->addArgument('arg', InputArgument::IS_ARRAY, 'The sake command to run, e.g. "db:build" or "dev/tasks/MyTask"');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -36,7 +35,6 @@ class SakeCommand extends Command
         $args = $input->getArguments()["arg"];
         $options = [
             $input->getOption('verbose') ? '-vvv' : null,
-            $input->getOption('flush') ? '--flush' : null,
             $input->getOption('ansi') ? '--ansi' : null,
             $input->getOption('no-ansi') ? '--no-ansi' : null,
             $input->getOption('no-interaction') ? '--no-interaction' : null,
