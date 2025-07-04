@@ -20,6 +20,9 @@ class SakeCommand extends Command
         $this
             ->setDescription('Run a sake command, e.g. sake db:build')
             ->addOption('verbose', ['v', 'vv', 'vvv'])
+            ->addOption('flush', 'f')
+            ->addOption('quiet', 'q')
+            ->addOption('silent')
             ->addOption('ansi')
             ->addOption('no-ansi')
             ->addOption('no-interaction')
@@ -35,6 +38,9 @@ class SakeCommand extends Command
         $args = $input->getArguments()["arg"];
         $options = [
             $input->getOption('verbose') ? '-vvv' : null,
+            $input->getOption('flush') ? '--flush' : null,
+            $input->getOption('silent') ? '--silent' : null,
+            $input->getOption('quiet') ? '--quiet' : null,
             $input->getOption('ansi') ? '--ansi' : null,
             $input->getOption('no-ansi') ? '--no-ansi' : null,
             $input->getOption('no-interaction') ? '--no-interaction' : null,
