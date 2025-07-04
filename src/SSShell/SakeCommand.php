@@ -22,6 +22,7 @@ class SakeCommand extends Command
             ->addOption('verbose', ['v', 'vv', 'vvv'])
             ->addOption('flush', 'f')
             ->addOption('quiet', 'q')
+            ->addOption('version', 'V')
             ->addOption('silent')
             ->addOption('ansi')
             ->addOption('no-ansi')
@@ -38,6 +39,7 @@ class SakeCommand extends Command
         $args = $input->getArguments()["arg"];
         $options = [
             $input->getOption('verbose') ? '-vvv' : null,
+            $input->getOption('version') ? '--version' : null,
             $input->getOption('flush') ? '--flush' : null,
             $input->getOption('silent') ? '--silent' : null,
             $input->getOption('quiet') ? '--quiet' : null,
