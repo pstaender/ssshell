@@ -36,7 +36,7 @@ class StaticCommand extends ReflectingCommand implements PresenterAware
         $dump = [];
         $className = $input->getArgument('className');
         $name = $input->getArgument('propertiesOrMethods') ?: '*';
-        $nestingLevel = (int) $input->getArgument('nestingLevel');
+        $nestingLevel = (int)$input->getArgument('nestingLevel');
         $depth = $nestingLevel == 0 ? 3 : $nestingLevel;
 
         $showProperties = preg_match('/^\$/i', $name);
@@ -58,13 +58,12 @@ class StaticCommand extends ReflectingCommand implements PresenterAware
 
         if ($showProperties) {
             $props = array_map(function (\ReflectionProperty $reflectionProperty) {
-                $visibility = null;
+                $visibility = 'public';
+
                 if ($reflectionProperty->isPrivate()) {
                     $visibility = 'private';
                 } elseif ($reflectionProperty->isProtected()) {
                     $visibility = 'protected';
-                } else {
-                    $visibility = 'public';
                 }
 
                 $reflectionProperty->setAccessible(true);
@@ -84,15 +83,14 @@ class StaticCommand extends ReflectingCommand implements PresenterAware
 
         if ($showMethods) {
             $methods = array_map(function (\ReflectionMethod $reflection) {
-                $visibility = null;
+                $visibility = 'public';
+
                 if ($reflection->isPrivate()) {
                     $visibility = 'private';
                 } elseif ($reflection->isProtected()) {
                     $visibility = 'protected';
                 } elseif ($reflection->isFinal()) {
                     $visibility = 'final';
-                } else {
-                    $visibility = 'public';
                 }
 
                 return [

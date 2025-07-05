@@ -28,9 +28,9 @@ You can use most of psyshs' cli arguments. Type `psysh -h` for help.
 
 ### Requirements
 
-sshell runs on SilverStripe v6.
+ssshell runs on SilverStripe v6.
 
-For SilverStripe v4 and v5 you can use the `ss4` / `ss5`-branches or stick to corresponding versions.
+For SilverStripe v4 and v5 you can use the `ss4` / `ss5`-branches or use the corresponding versions.
 
 ### Features
 
@@ -121,11 +121,15 @@ Displays static properties and methods:
 > static SilverStripe\Control\Director
 ```
 
-To display only one of them:
+Display a static property:
 
 ```sh
-> static props SilverStripe\Control\Director
-…
-> static methods SilverStripe\Control\Director
+> static SilverStripe\Control\Director $current_page
+```
+
+Display a static method:
+
+```sh
+> static SilverStripe\Control\Director test
 …
 ```
